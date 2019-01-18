@@ -62,7 +62,9 @@ sub open311_config {
         { name => 'title',
           value => $row->title },
         { name => 'description',
-          value => $row->detail };
+          value => $row->detail },
+        { name => 'category',
+          value => $row->category };
 
     $row->set_extra_fields(@$extra);
 }
