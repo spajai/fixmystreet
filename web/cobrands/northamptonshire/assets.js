@@ -12,11 +12,19 @@ fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
         apiKey: '' // need to populate this somehow
       },
       params: {
-        sourceId: 2086
+        sourceId: 2009
       }
     },
     body: "Northamptonshire County Council",
-    always_visible: true
+    always_visible: false,
+    asset_category: "Grit Bins",
+    asset_item: "grit bin",
+    attributes: {
+      asset_resource_id: function() {
+        console.log(this);
+        return this.fid;
+      }
+    }
 }));
 
 })();
