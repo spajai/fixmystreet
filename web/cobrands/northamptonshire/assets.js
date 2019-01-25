@@ -22,4 +22,25 @@ fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
     }
 }));
 
+fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+    protocol: OpenLayers.Protocol.Alloy,
+    http_options: {
+      layerid: 12,
+      layerVersion: 12.6,
+    },
+    body: "Northamptonshire County Council",
+    road: true,
+    always_visible: true,
+    non_interactive: true,
+    all_categories: true,
+    asset_item: 'road',
+    usrn: {
+        attribute: 'fid',
+        field: 'asset_resource_id'
+    },
+    getUSRN: function(feature) {
+      return feature.fid;
+    }
+}));
+
 })();
