@@ -4,24 +4,19 @@ if (!fixmystreet.maps) {
     return;
 }
 
-
 fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+    protocol: OpenLayers.Protocol.Alloy,
     http_options: {
-      url: "https://alloy-api.yotta.co.uk/api/resource/",
-      headers: {
-        apiKey: '' // need to populate this somehow
-      },
-      params: {
-        sourceId: 2009
-      }
+      layerid: 60,
+      layerVersion: 60.2022,
     },
+    asset_type: 'spot',
+    feature_code: 'itemId',
     body: "Northamptonshire County Council",
-    always_visible: false,
-    asset_category: "Grit Bins",
-    asset_item: "grit bin",
+    asset_category: [ 'Road traffic signs' ],
+    asset_item: 'sign',
     attributes: {
       asset_resource_id: function() {
-        console.log(this);
         return this.fid;
       }
     }

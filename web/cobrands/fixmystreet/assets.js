@@ -521,7 +521,11 @@ fixmystreet.assets = {
                 options.format_options.geometryName = options.geometryName;
             }
             protocol_options.format = new options.format_class(options.format_options);
-            protocol = new OpenLayers.Protocol.HTTP(protocol_options);
+            var protocol_class = OpenLayers.Protocol.HTTP;
+            if (options.protocol) {
+                protocol_class = options.protocol;
+            }
+            protocol = new protocol_class(protocol_options);
         } else {
             protocol_options = {
                 version: "1.1.0",
