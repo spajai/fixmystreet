@@ -13,7 +13,7 @@ fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
     asset_type: 'spot',
     feature_code: 'itemId',
     body: "Northamptonshire County Council",
-    asset_category: [ 'Road traffic signs' ],
+    asset_category: [ 'Signs' ],
     asset_item: 'sign',
     attributes: {
       asset_resource_id: function() {
