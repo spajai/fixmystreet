@@ -22,3 +22,13 @@
         color: $nav_colour;
     }
 }
+
+footer.northamptonshire {
+    li {
+        display: inline-block;
+        border-left: solid 1px white;
+    }
+    li:first-child {
+        border: none;
+    }
+}
