@@ -7,295 +7,303 @@ if (!fixmystreet.maps) {
 
 var layers = [
 {
-  "category": "Street Lights",
+  "layer_name": "Street Lights",
   "layer": 5,
   "version": "5.4-9.6-"
 },
 {
-  "category": "Street Lighting Nightscape",
+  "layer_name": "Street Lighting Nightscape",
   "layer": 9,
   "version": "9.6-"
 },
 {
-  "category": "Grit Bins",
+  "categories": [ "Grit Bin - damaged/replacement", "Grit Bin - empty/refill" ],
+  "item_name": "grit bin",
+  "layer_name": "Grit Bins",
   "layer": 13,
   "version": "13.5-"
 },
 {
-  "category": "Structures",
+  "categories": [ "Damaged/Unsafe" ],
+  "layer_name": "Structures",
   "layer": 14,
   "version": "14.2-"
 },
 {
-  "category": "Carriageways",
+  "layer_name": "Carriageways",
   "layer": 20,
   "version": "20.54-"
 },
 {
-  "category": "Road Heirarchy",
+  "layer_name": "Road Heirarchy",
   "layer": 39,
   "version": "39.53-"
 },
 {
-  "category": "Posts",
+  "layer_name": "Posts",
   "layer": 59,
   "version": "59.133-"
 },
 {
-  "category": "Signs",
+  "categories": [ "Damaged / Missing / Facing Wrong Way", "Obscured by vegetation or Dirty" ],
+  "item_name": "sign",
+  "layer_name": "Signs",
   "layer": 60,
   "version": "60.2111-"
 },
 {
-  "category": "Grips",
+  "layer_name": "Grips",
   "layer": 61,
   "version": "61.1-"
 },
 {
-  "category": "Traffic Monitoring",
+  "layer_name": "Traffic Monitoring",
   "layer": 62,
   "version": "62.2-"
 },
 {
-  "category": "Special Treatment",
+  "layer_name": "Special Treatment",
   "layer": 64,
   "version": "64.1-"
 },
 {
-  "category": "Gully",
+  "layer_name": "Gully",
   "layer": 66,
   "version": "66.9-"
 },
 {
-  "category": "Channel",
+  "layer_name": "Channel",
   "layer": 68,
   "version": "68.2-"
 },
 {
-  "category": "Comms Cabinet",
+  "layer_name": "Comms Cabinet",
   "layer": 69,
   "version": "69.1-"
 },
 {
-  "category": "Steps",
+  "layer_name": "Steps",
   "layer": 70,
   "version": "70.1-"
 },
 {
-  "category": "Step Handrail",
+  "layer_name": "Step Handrail",
   "layer": 71,
   "version": "71.1-"
 },
 {
-  "category": "Bus Stop",
+  "categories": [ "Shelter Damaged", "Sign/Pole Damaged" ],
+  "layer_name": "Bus Stop",
   "layer": 72,
   "version": "72.6-"
 },
 {
-  "category": "Tree Group",
+  "layer_name": "Tree Group",
   "layer": 74,
   "version": "74.1-"
 },
 {
-  "category": "Defects Ancillary Items",
+  "layer_name": "Defects Ancillary Items",
   "layer": 171,
   "version": "171.33-"
 },
 {
-  "category": "Speed Limit",
+  "layer_name": "Speed Limit",
   "layer": 172,
   "version": "172.33-"
 },
 {
-  "category": "PRoW Network",
+  "layer_name": "PRoW Network",
   "layer": 173,
   "version": "173.1-"
 },
 {
-  "category": "Footway Schemes",
+  "layer_name": "Footway Schemes",
   "layer": 174,
   "version": "174.1-"
 },
 {
-  "category": "BRIDGES",
+  "layer_name": "BRIDGES",
   "layer": 177,
   "version": "177.17-"
 },
 {
-  "category": "FINGER POST",
+  "layer_name": "FINGER POST",
   "layer": 178,
   "version": "178.39-"
 },
 {
-  "category": "GAPS",
+  "layer_name": "GAPS",
   "layer": 179,
   "version": "179.1-"
 },
 {
-  "category": "GATE",
+  "layer_name": "GATE",
   "layer": 181,
   "version": "181.2-"
 },
 {
-  "category": "OBSTRUCTIONS",
+  "layer_name": "OBSTRUCTIONS",
   "layer": 182,
   "version": "182.2-"
 },
 {
-  "category": "STEPS",
+  "layer_name": "STEPS",
   "layer": 184,
   "version": "184.2-"
 },
 {
-  "category": "STILE",
+  "layer_name": "STILE",
   "layer": 185,
   "version": "185.2-"
 },
 {
-  "category": "WAYMARK POST",
+  "layer_name": "WAYMARK POST",
   "layer": 187,
   "version": "187.2-"
 },
 {
-  "category": "Gate Types",
+  "layer_name": "Gate Types",
   "layer": 191,
   "version": "191.2-"
 },
 {
-  "category": "Gate Condition",
+  "layer_name": "Gate Condition",
   "layer": 192,
   "version": "192.2-"
 },
 {
-  "category": "Bridge Type",
+  "layer_name": "Bridge Type",
   "layer": 193,
   "version": "193.17-"
 },
 {
-  "category": "Bridge Condition",
+  "layer_name": "Bridge Condition",
   "layer": 194,
   "version": "194.17-"
 },
 {
-  "category": "PRoW Net By Type",
+  "layer_name": "PRoW Net By Type",
   "layer": 201,
   "version": "201.1-"
 },
 {
-  "category": "Finger Post Condition",
+  "layer_name": "Finger Post Condition",
   "layer": 209,
   "version": "209.39-"
 },
 {
-  "category": "F Post Path Type",
+  "layer_name": "F Post Path Type",
   "layer": 210,
   "version": "210.39-"
 },
 {
-  "category": "AW_Sewer",
+  "layer_name": "AW_Sewer",
   "layer": 215,
   "version": "215.1-"
 },
 {
-  "category": "CCTV",
+  "layer_name": "CCTV",
   "layer": 218,
   "version": "218.1-"
 },
 {
-  "category": "VMS",
+  "layer_name": "VMS",
   "layer": 219,
   "version": "219.1-"
 },
 {
-  "category": "Warning Signs",
+  "layer_name": "Warning Signs",
   "layer": 220,
   "version": "220.1-"
 },
 {
-  "category": "Traffic Calming",
+  "layer_name": "Traffic Calming",
   "layer": 221,
   "version": "221.1-"
 },
 {
-  "category": "Bluetooth Counter",
+  "layer_name": "Bluetooth Counter",
   "layer": 222,
   "version": "222.1-"
 },
 {
-  "category": "Midblock",
+  "layer_name": "Midblock",
   "layer": 223,
   "version": "223.1-"
 },
 {
-  "category": "Over Height",
+  "layer_name": "Over Height",
   "layer": 224,
   "version": "224.1-"
 },
 {
-  "category": "TL Junction",
+  "layer_name": "TL Junction",
   "layer": 225,
   "version": "225.1-"
 },
 {
-  "category": "RTI Display",
+  "layer_name": "RTI Display",
   "layer": 226,
   "version": "226.1-"
 },
 {
-  "category": "System Links",
+  "layer_name": "System Links",
   "layer": 227,
   "version": "227.1-"
 },
 {
-  "category": "Tree",
+  "layer_name": "Tree",
   "layer": 228,
   "version": "228.3-"
 },
 {
-  "category": "CULVERTS (PRoW)",
+  "layer_name": "CULVERTS (PRoW)",
   "layer": 229,
   "version": "229.1-"
 },
 {
-  "category": "PEDESTRIAN GUARDRAIL",
+  "layer_name": "PEDESTRIAN GUARDRAIL",
   "layer": 230,
   "version": "230.1-"
 },
 {
-  "category": "Traffic Signal Controller",
+  "layer_name": "Traffic Signal Controller",
   "layer": 231,
   "version": "231.1-"
 },
 {
-  "category": "Traffic Signal Posts",
+  "layer_name": "Traffic Signal Posts",
   "layer": 232,
   "version": "232.1-"
 },
 {
-  "category": "Safety Bollard",
+  "layer_name": "Safety Bollard",
   "layer": 233,
   "version": "233.1-"
 },
 ];
 
 $.each(layers, function(index, layer) {
-  fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
-      protocol: OpenLayers.Protocol.Alloy,
-      http_options: {
-        layerid: layer.layer,
-        layerVersion: layer.version,
-      },
-      asset_type: 'spot',
-      feature_code: 'itemId',
-      body: "Northamptonshire County Council",
-      asset_category: [ layer.category ],
-      asset_item: layer.category,
-      attributes: {
-        asset_resource_id: function() {
-          return this.fid;
-        }
-      }
-  }));
+    if ( layer.categories ) {
+        fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+            protocol: OpenLayers.Protocol.Alloy,
+            http_options: {
+              layerid: layer.layer,
+              layerVersion: layer.version,
+            },
+            asset_type: 'spot',
+            feature_code: 'itemId',
+            body: "Northamptonshire County Council",
+            asset_category: layer.categories,
+            asset_item: layer.item_name || layer.layer_name.toLowerCase(),
+            attributes: {
+              asset_resource_id: function() {
+                return this.fid;
+              }
+            }
+        }));
+    }
 });
 
 fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
