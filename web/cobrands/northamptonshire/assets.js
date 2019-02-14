@@ -24,7 +24,7 @@ var layers = [
   "version": "13.5-"
 },
 {
-  "categories": [ "Damaged/Unsafe" ],
+  "categories": [ "Highway Bridges - Damaged/Unsafe" ],
   "asset_type": 'area',
   "item_name": 'bridge',
   "layer_name": "Structures",
@@ -155,11 +155,14 @@ var layers = [
   "version": "184.2-"
 },
 {
+  "categories": [ "Stile-Damaged/Missing" ],
   "layer_name": "STILE",
   "layer": 185,
   "version": "185.2-"
 },
 {
+  "categories": [ "Sign/Waymarking - Damaged/Missing" ],
+  "item_name": "waymarking",
   "layer_name": "WAYMARK POST",
   "layer": 187,
   "version": "187.2-"
@@ -286,6 +289,10 @@ var layers = [
   "version": "229.1-"
 },
 {
+  "categories": [
+    "Pedestrian Barriers - Damaged / Missing",
+  ],
+  "item_name": "guardrail",
   "layer_name": "PEDESTRIAN GUARDRAIL",
   "layer": 230,
   "version": "230.1-"
@@ -353,15 +360,15 @@ fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
         "Slabs - Missing",
         "Damaged/Loose",
         "Missing",
-        "Damaged / Missing ",
-        "Worn/Faded",
+        "Crash Barriers - Damaged / Missing ",
+        "Road Markings - Worn/Faded",
         "Flooding",
         "Mud on Road",
         "Potholes / Highway Condition",
         "Spill - Oil/Diesel",
         "Damaged/Missing",
         "Weeds",
-        "Damaged by Vehicles",
+        "Verges - Damaged by Vehicles",
         "Icy Footpath",
         "Icy Road",
         "Missed published Gritted Route",
