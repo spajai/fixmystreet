@@ -25,6 +25,8 @@ var layers = [
 },
 {
   "categories": [ "Damaged/Unsafe" ],
+  "asset_type": 'area',
+  "item_name": 'bridge',
   "layer_name": "Structures",
   "layer": 14,
   "version": "14.2-"
@@ -242,6 +244,18 @@ var layers = [
   "version": "224.1-"
 },
 {
+  "categories": [
+    "Damaged/Exposed Wiring / Vandalised",
+    "Lamp/Bulb Failure",
+    "Signal Failure",
+    "Signal Failure all out",
+    "Signal Stuck",
+    "Signal Head Failure",
+    "Request Timing Review",
+    "Damaged Control box",
+    "Signal Failure/Damaged - Toucan/Pelican",
+  ],
+  "item_name": "signal or crossing",
   "layer_name": "TL Junction",
   "layer": 225,
   "version": "225.1-"
@@ -257,6 +271,11 @@ var layers = [
   "version": "227.1-"
 },
 {
+  "categories": [
+    "Fallen Tree",
+    "Restricted Visibility / Overgrown / Overhanging",
+    "Restricted Visibility",
+  ],
   "layer_name": "Tree",
   "layer": 228,
   "version": "228.3-"
