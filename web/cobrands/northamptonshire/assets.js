@@ -125,6 +125,8 @@ var layers = [
   "version": "174.1-"
 },
 {
+  "categories": [ "Bridge-Damaged/ Missing" ],
+  "item_name": "bridge",
   "layer_name": "BRIDGES",
   "layer": 177,
   "version": "177.17-"
@@ -140,11 +142,14 @@ var layers = [
   "version": "179.1-"
 },
 {
+  "categories": [ "Gate - Damaged/ Missing" ],
   "layer_name": "GATE",
   "layer": 181,
   "version": "181.2-"
 },
 {
+  "categories": [ "Livestock", "Passage-Obstructed/Overgrown" ],
+  "item_name": "obstruction",
   "layer_name": "OBSTRUCTIONS",
   "layer": 182,
   "version": "182.2-"
