@@ -371,6 +371,7 @@ fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
     road: true,
     always_visible: false,
     non_interactive: true,
+    disable_pin_snapping: true,
     asset_category: [
         "Loose / Raised/Sunken",
         "Broken / Missing",
