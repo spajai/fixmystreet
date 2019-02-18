@@ -323,6 +323,7 @@ $.each(layers, function(index, layer) {
               layerid: layer.layer,
               layerVersion: layer.version,
             },
+            non_interactive: layer.non_interactive || false,
             asset_type: layer.asset_type || 'spot',
             feature_code: 'itemId',
             body: "Northamptonshire County Council",
