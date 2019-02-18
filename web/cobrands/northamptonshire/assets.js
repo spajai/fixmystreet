@@ -294,10 +294,6 @@ var layers = [
   "version": "229.1-"
 },
 {
-  "categories": [
-    "Pedestrian Barriers - Damaged / Missing",
-  ],
-  "item_name": "guardrail",
   "layer_name": "PEDESTRIAN GUARDRAIL",
   "layer": 230,
   "version": "230.1-"
@@ -340,6 +336,30 @@ $.each(layers, function(index, layer) {
         }));
     }
 });
+
+fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+    protocol: OpenLayers.Protocol.Alloy,
+    http_options: {
+      layerid: 230,
+      layerVersion: '230.1-',
+    },
+    body: "Northamptonshire County Council",
+    road: true,
+    always_visible: false,
+    non_interactive: true,
+    disable_pin_snapping: true,
+    asset_category: [
+        "Pedestrian Barriers - Damaged / Missing",
+    ],
+    asset_item: 'guardrail',
+    usrn: {
+        attribute: 'fid',
+        field: 'asset_resource_id'
+    },
+    getUSRN: function(feature) {
+      return feature.fid;
+    }
+}));
 
 fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
     protocol: OpenLayers.Protocol.Alloy,
