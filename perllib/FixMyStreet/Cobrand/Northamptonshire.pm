@@ -73,5 +73,8 @@ sub open311_config {
     $row->set_extra_fields(@$extra);
 }
 
+# sending updates not part of initial phase
+sub should_skip_sending_update { 1; }
+
 
 1;
