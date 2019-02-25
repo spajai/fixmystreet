@@ -58,7 +58,7 @@ sub open311_config {
     my $extra = $row->get_extra_fields;
 
     # remove the emergency category which is informational only
-    @$extra = grep { $_->name ne 'emergency' } @$extra;
+    @$extra = grep { $_->{name} ne 'emergency' } @$extra;
 
     push @$extra,
         { name => 'report_url',
