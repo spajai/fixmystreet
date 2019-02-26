@@ -14,6 +14,8 @@ sub council_url { 'northamptonshire' }
 
 sub example_places { ( 'NN1 1NS', "Bridge Street" ) }
 
+sub enter_postcode_text { 'Enter a Northamptonshire postcode, street name and area, or check an existing report number' }
+
 sub base_url {
     my $self = shift;
     return $self->next::method() if FixMyStreet->config('STAGING_SITE');
