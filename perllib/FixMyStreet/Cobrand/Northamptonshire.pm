@@ -37,6 +37,8 @@ sub send_questionnaires { 0 }
 
 sub on_map_default_status { 'open' }
 
+sub report_sent_confirmation_email { 1 }
+
 sub contact_email {
     my $self = shift;
     return join( '@', 'highways', $self->council_url . '.gov.uk' );
