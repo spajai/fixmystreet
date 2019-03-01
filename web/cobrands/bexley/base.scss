@@ -1,0 +1,52 @@
+@import "../sass/h5bp";
+@import "./_colours";
+@import "../sass/mixins";
+@import "../sass/base";
+
+#site-logo {
+    width: 150px;
+    height: 60px;
+    padding: 1em 0;
+    background: url(/cobrands/bexley/images/logo.png) 0 50% no-repeat;
+    background-size: 150px 60px;
+}
+
+#postcodeForm .form-hint {
+//    color: $white;
+}
+
+a,
+.fake-link {
+  text-decoration: none;
+  color: $link;
+
+  &:visited {
+    color: $visited;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+    color: $hover;
+  }
+
+  &:focus {
+    color: $focus;
+  }
+}
+
+.dz-clickable .dz-message u {
+  color: $link;
+}
+
+.btn-primary,
+.green-btn,
+.btn--primary {
+    border: none;
+    background: $spring;
+
+    &:hover,
+    &:active {
+        background: lighten($spring, 5%);
+    }
+}
