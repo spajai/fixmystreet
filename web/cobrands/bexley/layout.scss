@@ -1,0 +1,15 @@
+@import "_colours";
+
+@import "../sass/layout";
+
+body.twothirdswidthpage .content .sticky-sidebar aside {
+    top: 10em;
+}
+
+#site-logo {
+    width: 208px;
+    height: 80px;
+    padding: 24px 0;
+    background-position: 8px 50%;
+    background-size: 200px 80px;
+}
