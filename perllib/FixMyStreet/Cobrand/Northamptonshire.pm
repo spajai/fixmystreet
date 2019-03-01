@@ -52,4 +52,29 @@ sub get_geocoder { 'OSM' }
 
 sub map_type { 'OSM' }
 
+sub open311_config {
+    my ($self, $row, $h, $params) = @_;
+
+    my $extra = $row->get_extra_fields;
+
+    # remove the emergency category which is informational only
+    @$extra = grep { $_->{name} ne 'emergency' } @$extra;
+
+    push @$extra,
+        { name => 'report_url',
+          value => $h->{url} },
+        { name => 'title',
+          value => $row->title },
+        { name => 'description',
+          value => $row->detail },
+        { name => 'category',
+          value => $row->category };
+
+    $row->set_extra_fields(@$extra);
+}
+
+# sending updates not part of initial phase
+sub should_skip_sending_update { 1; }
+
+
 1;
