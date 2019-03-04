@@ -71,6 +71,8 @@ sub open311_config {
           value => $row->category };
 
     $row->set_extra_fields(@$extra);
+
+    $params->{multi_photos} = 1;
 }
 
 # sending updates not part of initial phase
