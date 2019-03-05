@@ -315,9 +315,47 @@ var layers = [
 },
 ];
 
+var northants_defaults = $.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+  select_action: true,
+  actions: {
+    asset_found: function(asset) {
+      var lonlat = asset.geometry.getBounds().getCenterLonLat();
+      // Features considered overlapping if within 1M of each other
+      // TODO: Should zoom/marker size be considered when determining if markers overlap?
+      var overlap_threshold = 1;
+      var overlapping_features = this.getFeaturesWithinDistance(
+          new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat),
+          overlap_threshold
+      );
+      if (overlapping_features.length > 1) {
+          // TODO: In an ideal world we'd be able to show the user a photo of each
+          // of the assets and ask them to pick one.
+          // However the Alloy API requires authentication for photos which we
+          // don't have in FMS JS. Instead, we tell the user there are multiple things here
+          // and ask them to describe the asset in the description field.
+          var $p = $("#overlapping_features_msg");
+          if (!$p.length) {
+              $p = $("<p id='overlapping_features_msg' class='hidden box-warning'>" +
+              "There is more than one <span class='overlapping_item_name'></span> at this location. " +
+              "Please describe which <span class='overlapping_item_name'></span> has the problem clearly.</p>");
+              $p.insertAfter('#form_category_row');
+          }
+          $p.find(".overlapping_item_name").text(this.fixmystreet.asset_item);
+          $p.removeClass('hidden');
+      } else {
+          $("#overlapping_features_msg").addClass('hidden');
+      }
+
+    },
+    asset_not_found: function() {
+      $("#overlapping_features_msg").addClass('hidden');
+    }
+  }
+});
+
 $.each(layers, function(index, layer) {
     if ( layer.categories ) {
-        fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+        fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
             protocol: OpenLayers.Protocol.Alloy,
             http_options: {
               layerid: layer.layer,
@@ -338,7 +376,7 @@ $.each(layers, function(index, layer) {
     }
 });
 
-fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
     protocol: OpenLayers.Protocol.Alloy,
     http_options: {
       layerid: 230,
@@ -362,7 +400,7 @@ fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
     }
 }));
 
-fixmystreet.assets.add($.extend(true, {}, fixmystreet.assets.alloy_defaults, {
+fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
     protocol: OpenLayers.Protocol.Alloy,
     http_options: {
       layerid: 20,

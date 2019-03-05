@@ -112,13 +112,13 @@ OpenLayers.Layer.VectorAsset = OpenLayers.Class(OpenLayers.Layer.Vector, {
 
     asset_found: function() {
         if (this.fixmystreet.actions) {
-            this.fixmystreet.actions.asset_found(fixmystreet.assets.selectedFeature(), this.fixmystreet);
+            this.fixmystreet.actions.asset_found.call(this, fixmystreet.assets.selectedFeature());
         }
     },
 
     asset_not_found: function() {
         if (this.fixmystreet.actions) {
-            this.fixmystreet.actions.asset_not_found(this.fixmystreet);
+            this.fixmystreet.actions.asset_not_found.call(this);
         }
     },
 
@@ -222,7 +222,7 @@ OpenLayers.Layer.VectorNearest = OpenLayers.Class(OpenLayers.Layer.VectorAsset, 
     },
 
     road_found: function() {
-        if (this.fixmystreet.actions) {
+        if (this.fixmystreet.actions && this.fixmystreet.actions.found) {
             this.fixmystreet.actions.found(this, this.selected_feature);
         } else if (!fixmystreet.assets.selectedFeature()) {
             fixmystreet.body_overrides.only_send(this.fixmystreet.body);
@@ -230,7 +230,7 @@ OpenLayers.Layer.VectorNearest = OpenLayers.Class(OpenLayers.Layer.VectorAsset, 
     },
 
     road_not_found: function() {
-        if (this.fixmystreet.actions) {
+        if (this.fixmystreet.actions && this.fixmystreet.actions.not_found) {
             this.fixmystreet.actions.not_found(this);
         } else {
             fixmystreet.body_overrides.remove_only_send();
@@ -795,6 +795,34 @@ OpenLayers.Layer.Vector.prototype.getNearestFeature = function(point, threshold)
         }
     }
     return nearest_feature;
+};
+
+
+/*
+ * Returns all features from this layer within a given distance (<threshold>
+ * metres) of the given OpenLayers.Geometry.Point.
+ * Returns an empty list if no features meeting these criteria is found.
+ */
+OpenLayers.Layer.Vector.prototype.getFeaturesWithinDistance = function(point, threshold) {
+    var features = [];
+    for (var i = 0; i < this.features.length; i++) {
+        var candidate = this.features[i];
+        if (!candidate.geometry || !candidate.geometry.distanceTo) {
+            continue;
+        }
+        var details = candidate.geometry.distanceTo(point, {details: true});
+        // The units used for details.distance aren't metres, they're
+        // whatever the map projection uses. Convert to metres in order to
+        // draw a meaningful comparison to the threshold value.
+        var p1 = new OpenLayers.Geometry.Point(details.x0, details.y0);
+        var p2 = new OpenLayers.Geometry.Point(details.x1, details.y1);
+        var line = new OpenLayers.Geometry.LineString([p1, p2]);
+        var distance_m = line.getGeodesicLength(this.map.getProjectionObject());
+        if (distance_m <= threshold) {
+            features.push(candidate);
+        }
+    }
+    return features;
 };
 
 
