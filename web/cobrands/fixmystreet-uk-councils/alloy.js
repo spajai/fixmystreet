@@ -30,11 +30,12 @@ OpenLayers.Protocol.Alloy = OpenLayers.Class(OpenLayers.Protocol.HTTP, {
         options = OpenLayers.Util.applyDefaults(options, this.options);
         var all_tiles = this.getTileRange_(options.scope.bounds, options.scope.layer.maxExtent, options.scope.layer.map);
         var rresp;
+        var start = new Date();
         var max = all_tiles.length;
+        $(fixmystreet).trigger('alloy:start_request', [start, max]);
         for (var i = 0; i < max; i++) {
             var resp = new OpenLayers.Protocol.Response({requestType: "read"});
-            resp.count = i;
-            resp.max = i == (max - 1) ? 1 : 0;
+            resp.start = start;
             var url = this.getURL(all_tiles[i], options);
             resp.priv = OpenLayers.Request.GET({
                 url: url, //options.url,
@@ -84,13 +85,26 @@ OpenLayers.Protocol.Alloy = OpenLayers.Class(OpenLayers.Protocol.HTTP, {
 });
 
 OpenLayers.Strategy.Alloy = OpenLayers.Class(OpenLayers.Strategy.FixMyStreet, {
+    count: 0,
+    max: 0,
+    requestStart: 0,
+    initialize: function(name, options) {
+        OpenLayers.Strategy.FixMyStreet.prototype.initialize.apply(this, arguments);
+        $(fixmystreet).on('alloy:start_request', this.newRequest.bind(this));
+    },
+    newRequest: function(evt, start, max) {
+      this.max = max;
+      this.requestStart = start;
+      this.count = 0;
+      this.layer.destroyFeatures();
+    },
     merge: function(resp) {
-        // remove existing features when we load the first tile
-        // need to handle this better as it's async so they
-        // might not come in the order we run them
-        if (resp.count == 0) {
-            this.layer.destroyFeatures();
+        // because we are issueing async requests it's possible that if someone moves the
+        // map we've triggered a new set of requests, in which case ignore the old ones.
+        if (resp.start < this.requestStart) {
+          return;
         }
+        this.count++;
         if (resp.success()) {
             var features = resp.features;
             if(features && features.length > 0) {
@@ -110,8 +124,8 @@ OpenLayers.Strategy.Alloy = OpenLayers.Class(OpenLayers.Strategy.FixMyStreet, {
         } else {
             this.bounds = null;
         }
-        this.response = null;
-        if (resp.max) {
+        if (this.count == this.max) {
+            this.layer.checkFeature(null, fixmystreet.get_lonlat_from_dom());
             this.layer.events.triggerEvent("loadend", {response: resp});
         }
     },
