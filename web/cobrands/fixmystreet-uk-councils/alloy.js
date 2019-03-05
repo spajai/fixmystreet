@@ -125,7 +125,9 @@ OpenLayers.Strategy.Alloy = OpenLayers.Class(OpenLayers.Strategy.FixMyStreet, {
             this.bounds = null;
         }
         if (this.count == this.max) {
-            this.layer.checkFeature(null, fixmystreet.get_lonlat_from_dom());
+            if ( this.layer.checkFeature ) {
+                this.layer.checkFeature(null, fixmystreet.get_lonlat_from_dom());
+            }
             this.layer.events.triggerEvent("loadend", {response: resp});
         }
     },
