@@ -228,10 +228,6 @@ var layers = [
   "version": "220.1-"
 },
 {
-  "categories": [ "Damaged Speed Humps" ],
-  "asset_type": 'area',
-  "item_name": "speed hump",
-  "non_interactive": true,
   "layer_name": "Traffic Calming",
   "layer": 221,
   "version": "221.1-"
@@ -375,6 +371,31 @@ $.each(layers, function(index, layer) {
         }));
     }
 });
+
+fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
+    protocol: OpenLayers.Protocol.Alloy,
+    http_options: {
+      layerid: 221,
+      layerVersion: '221.1-',
+    },
+    body: "Northamptonshire County Council",
+    road: true,
+    asset_type: "area",
+    always_visible: false,
+    non_interactive: true,
+    disable_pin_snapping: true,
+    asset_category: [
+        "Damaged Speed Humps",
+    ],
+    asset_item: 'speed hump',
+    usrn: {
+        attribute: 'fid',
+        field: 'asset_resource_id'
+    },
+    getUSRN: function(feature) {
+      return feature.fid;
+    }
+}));
 
 fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
     protocol: OpenLayers.Protocol.Alloy,
