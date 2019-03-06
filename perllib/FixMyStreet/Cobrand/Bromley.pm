@@ -7,6 +7,7 @@ use utf8;
 use DateTime::Format::W3CDTF;
 use DateTime::Format::Flexible;
 use Try::Tiny;
+use FixMyStreet::DateRange;
 
 sub council_area_id { return 2482; }
 sub council_area { return 'Bromley'; }
@@ -44,8 +45,6 @@ sub problems_on_map_restriction {
     my $tfl = FixMyStreet::DB->resultset('Body')->search({ name => 'TfL' })->first;
     return $rs->to_body($tfl ? [ $self->body->id, $tfl->id ] : $self->body);
 }
-
-sub default_show_name { 0 }
 
 sub disambiguate_location {
     my $self    = shift;
@@ -224,7 +223,6 @@ sub open311_config {
 
 sub open311_config_updates {
     my ($self, $params) = @_;
-    $params->{use_extended_updates} = 1;
     $params->{endpoints} = {
         service_request_updates => 'update.xml',
         update => 'update.xml'
@@ -239,6 +237,14 @@ sub open311_pre_send {
         $extra->{title} = $row->user->title;
         $row->extra( $extra );
     }
+}
+
+sub open311_munge_update_params {
+    my ($self, $params, $comment, $body) = @_;
+    delete $params->{update_id};
+    $params->{public_anonymity_required} = $comment->anonymous ? 'TRUE' : 'FALSE',
+    $params->{update_id_ext} = $comment->id;
+    $params->{service_request_id_ext} = $comment->problem->id;
 }
 
 sub open311_contact_meta_override {
@@ -387,27 +393,17 @@ sub munge_load_and_group_problems {
     }
 
     # Date range
-    my $dtf = $c->model('DB')->storage->datetime_parser;
-    my $dtp = DateTime::Format::Flexible->new;
     my $start_default = DateTime->today(time_zone => FixMyStreet->time_zone || FixMyStreet->local_time_zone)->subtract(months => 3);
     $c->stash->{start_date} = $c->get_param('start_date') || $start_default->strftime('%Y-%m-%d');
     $c->stash->{end_date} = $c->get_param('end_date');
 
-    my $start_date = try {
-        $dtp->parse_datetime($c->stash->{start_date}, european => 1);
-    } catch {
-        $start_default;
-    };
-    $where->{'me.confirmed'} = { '>=', $dtf->format_datetime($start_date) };
-
-    my $end_date = try {
-        $dtp->parse_datetime($c->stash->{end_date}, european => 1);
-    };
-    if ($end_date) {
-        my $one_day = DateTime::Duration->new( days => 1 );
-        $end_date += $one_day;
-        $where->{'me.confirmed'} = [ -and => $where->{'me.confirmed'}, { '<', $dtf->format_datetime($end_date) } ];
-    }
+    my $range = FixMyStreet::DateRange->new(
+        start_date => $c->stash->{start_date},
+        start_default => $start_default,
+        end_date => $c->stash->{end_date},
+        formatter => $c->model('DB')->storage->datetime_parser,
+    );
+    $where->{'me.confirmed'} = $range->sql;
 
     delete $filter->{rows};
 

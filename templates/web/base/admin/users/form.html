@@ -22,11 +22,11 @@
             <input class="btn" type="submit" name="send_login_email" value="[% loc('Send login email') %]">
         [% END %]
         </li>
-        <li><label class="inline" for="email_verified">[% loc('Email verified:') %]</label>
+        <li><label class="inline-text" for="email_verified">[% loc('Email verified:') %]</label>
         <input type="checkbox" id="email_verified" name="email_verified" value="1" [% user.email_verified ? ' checked' : '' %]>
         <li><label for="phone">[% loc('Phone:') %]</label>
         <input type='text' class="form-control" id='phone' name='phone' value='[% user.phone | html %]'></li>
-        <li><label class="inline" for="phone_verified">[% loc('Phone verified:') %]</label>
+        <li><label class="inline-text" for="phone_verified">[% loc('Phone verified:') %]</label>
         <input type="checkbox" id="phone_verified" name="phone_verified" value="1" [% user.phone_verified ? ' checked' : '' %]>
 
       [% IF username_in_abuse %]
@@ -111,7 +111,7 @@
             <p>
               [% loc("Mark users whose behaviour you want to keep a check on as <strong>flagged</strong>.") %]
               <br>
-              [% tprintf(loc("Flagged users are listed on the <a href='%s'>flagged</a> page."), c.uri_for( 'flagged' )) %]
+              [% tprintf(loc("Flagged users are listed on the <a href='%s'>flagged</a> page."), c.uri_for_action( 'admin/flagged' )) %]
               <br>
               [% loc("You can add an abusive user's email to the abuse list, which automatically hides (and never sends) reports they create.") %]
             </p>

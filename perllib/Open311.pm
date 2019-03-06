@@ -29,7 +29,6 @@ has always_send_latlong => ( is => 'ro', isa => Bool, default => 1 );
 has send_notpinpointed => ( is => 'ro', isa => Bool, default => 0 );
 has extended_description => ( is => 'ro', isa => Str, default => 1 );
 has use_service_as_deviceid => ( is => 'ro', isa => Bool, default => 0 );
-has use_extended_updates => ( is => 'ro', isa => Bool, default => 0 );
 has extended_statuses => ( is => 'ro', isa => Bool, default => 0 );
 has always_send_email => ( is => 'ro', isa => Bool, default => 0 );
 has multi_photos => ( is => 'ro', isa => Bool, default => 0 );
@@ -273,10 +272,9 @@ sub get_service_request_updates {
 }
 
 sub post_service_request_update {
-    my $self = shift;
-    my $comment = shift;
+    my ($self, $comment, $body, $cobrand) = @_;
 
-    my $params = $self->_populate_service_request_update_params( $comment );
+    my $params = $self->_populate_service_request_update_params( $comment, $body, $cobrand );
 
     my $response = $self->_post( $self->endpoints->{update}, $params );
 
@@ -334,8 +332,7 @@ sub map_state {
 }
 
 sub _populate_service_request_update_params {
-    my $self = shift;
-    my $comment = shift;
+    my ($self, $comment, $body, $cobrand) = @_;
 
     my $name = $comment->name || $comment->user->name;
     my ( $firstname, $lastname ) = $self->split_name( $name );
@@ -387,14 +384,9 @@ sub _populate_service_request_update_params {
 
     $params->{phone} = $comment->user->phone if $comment->user->phone;
     $params->{email} = $comment->user->email if $comment->user->email;
+    $params->{update_id} = $comment->id;
 
-    if ( $self->use_extended_updates ) {
-        $params->{public_anonymity_required} = $comment->anonymous ? 'TRUE' : 'FALSE',
-        $params->{update_id_ext} = $comment->id;
-        $params->{service_request_id_ext} = $comment->problem->id;
-    } else {
-        $params->{update_id} = $comment->id;
-    }
+    $cobrand->call_hook(open311_munge_update_params => $params, $comment, $body);
 
     if ( $comment->photo ) {
         my $cobrand = $comment->get_cobrand_logged;

@@ -34,4 +34,16 @@ sub contact_email {
     return join( '@', 'customer.services', $self->council_url . '.gov.uk' );
 }
 
+sub open311_munge_update_params {
+    my ($self, $params, $comment, $body) = @_;
+
+    $params->{service_request_id_ext} = $comment->problem->id;
+
+    my $contact = $comment->result_source->schema->resultset("Contact")->not_deleted->find({
+        body_id => $body->id,
+        category => $comment->problem->category
+    });
+    $params->{service_code} = $contact->email;
+}
+
 1;

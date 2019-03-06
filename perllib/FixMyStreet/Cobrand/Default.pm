@@ -237,6 +237,18 @@ sub base_url_for_report {
     return $self->base_url_with_lang;
 }
 
+=item relative_url_for_report
+
+Returns the relative base url for a report (might be different in a two-tier
+county, but normally blank). Report may be an object, or a hashref.
+
+=cut
+
+sub relative_url_for_report {
+    my ( $self, $report ) = @_;
+    return "";
+}
+
 =item base_host
 
 Return the base host for the cobranded version of the site
@@ -1000,9 +1012,7 @@ Returns true if the show name checkbox should be ticked by default.
 
 =cut
 
-sub default_show_name {
-    1;
-}
+sub default_show_name { 0 }
 
 =item report_check_for_errors
 
