@@ -292,7 +292,7 @@ subtest 'basic request update post parameters' => sub {
 };
 
 subtest 'extended request update post parameters' => sub {
-    my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', { use_extended_updates => 1 } );
+    my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', FixMyStreet::Cobrand::Bromley->new);
 
     is $results->{ res }, 248, 'got update id';
 
@@ -444,7 +444,7 @@ foreach my $test (
         if ( $test->{extended} ) {
             my $params = { extended_statuses => 1 };
             $params->{mark_reopen} = 1 if $test->{mark_reopen};
-            my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', $params );
+            my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', undef, $params );
             my $c = CGI::Simple->new( $results->{ req }->content );
             is $c->param('status'), $test->{extended}, 'correct extended status';
         }
@@ -470,7 +470,7 @@ for my $test (
         $comment->problem->state( $test->{state} );
         $comment->anonymous( $test->{anon} );
 
-        my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', { use_extended_updates => 1 } );
+        my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', FixMyStreet::Cobrand::Bromley->new);
 
         my $c = CGI::Simple->new( $results->{ req }->content );
         is $c->param('public_anonymity_required'), $test->{anon} ? 'TRUE' : 'FALSE', 'correct anonymity';
@@ -523,7 +523,7 @@ for my $test (
         is $c->param('status'), $test->{status}, 'correct status';
 
         if ( $test->{extended} ) {
-            my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', { extended_statuses => 1 } );
+            my $results = make_update_req( $comment, '<?xml version="1.0" encoding="utf-8"?><service_request_updates><request_update><update_id>248</update_id></request_update></service_request_updates>', undef, { extended_statuses => 1 } );
             my $c = CGI::Simple->new( $results->{ req }->content );
             is $c->param('status'), $test->{extended}, 'correct extended status';
         }
@@ -768,12 +768,14 @@ done_testing();
 sub make_update_req {
     my $comment = shift;
     my $xml = shift;
+    my $cobrand = shift || FixMyStreet::Cobrand::Default->new;
     my $open311_args = shift || {};
 
     my $params = {
         object       => $comment,
         xml          => $xml,
         method       => 'post_service_request_update',
+        method_args  => [ undef, $cobrand ], # undef is body
         path         => 'servicerequestupdates.xml',
         open311_conf => $open311_args,
     };

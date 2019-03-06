@@ -34,7 +34,6 @@ subtest 'Check Open311 params' => sub {
     is_deeply \%conf, {
         %$result,
         extended_statuses => 1,
-        use_extended_updates => 1,
         endpoints => { service_request_updates => 'update.xml', update => 'update.xml' },
     }, 'Bromley params match';
     %conf = $o->open311_params($oxon);

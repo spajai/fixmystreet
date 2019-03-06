@@ -92,7 +92,7 @@ sub process_update {
 
     $cobrand->call_hook(open311_pre_send => $comment, $o);
 
-    my $id = $o->post_service_request_update( $comment );
+    my $id = $o->post_service_request_update( $comment, $body, $cobrand );
 
     if ( $id ) {
         $comment->update( {
