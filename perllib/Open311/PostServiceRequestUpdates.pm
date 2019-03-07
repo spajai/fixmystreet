@@ -38,6 +38,7 @@ sub open311_params {
         jurisdiction => $body->jurisdiction,
         api_key => $body->api_key,
         extended_statuses => $body->send_extended_statuses,
+        fixmystreet_body => $body,
     );
 
     my $cobrand = $body->get_cobrand_handler;
@@ -92,7 +93,7 @@ sub process_update {
 
     $cobrand->call_hook(open311_pre_send => $comment, $o);
 
-    my $id = $o->post_service_request_update( $comment, $body, $cobrand );
+    my $id = $o->post_service_request_update( $comment );
 
     if ( $id ) {
         $comment->update( {

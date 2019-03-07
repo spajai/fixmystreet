@@ -34,6 +34,7 @@ has always_send_email => ( is => 'ro', isa => Bool, default => 0 );
 has multi_photos => ( is => 'ro', isa => Bool, default => 0 );
 has use_customer_reference => ( is => 'ro', isa => Bool, default => 0 );
 has mark_reopen => ( is => 'ro', isa => Bool, default => 0 );
+has fixmystreet_body => ( is => 'ro', isa => InstanceOf['FixMyStreet::DB::Result::Body'] );
 
 before [
     qw/get_service_list get_service_meta_info get_service_requests get_service_request_updates
@@ -272,9 +273,10 @@ sub get_service_request_updates {
 }
 
 sub post_service_request_update {
-    my ($self, $comment, $body, $cobrand) = @_;
+    my $self = shift;
+    my $comment = shift;
 
-    my $params = $self->_populate_service_request_update_params( $comment, $body, $cobrand );
+    my $params = $self->_populate_service_request_update_params( $comment );
 
     my $response = $self->_post( $self->endpoints->{update}, $params );
 
@@ -332,7 +334,8 @@ sub map_state {
 }
 
 sub _populate_service_request_update_params {
-    my ($self, $comment, $body, $cobrand) = @_;
+    my $self = shift;
+    my $comment = shift;
 
     my $name = $comment->name || $comment->user->name;
     my ( $firstname, $lastname ) = $self->split_name( $name );
@@ -386,7 +389,8 @@ sub _populate_service_request_update_params {
     $params->{email} = $comment->user->email if $comment->user->email;
     $params->{update_id} = $comment->id;
 
-    $cobrand->call_hook(open311_munge_update_params => $params, $comment, $body);
+    my $cobrand = $self->fixmystreet_body->get_cobrand_handler || $comment->get_cobrand_logged;
+    $cobrand->call_hook(open311_munge_update_params => $params, $comment, $self->fixmystreet_body);
 
     if ( $comment->photo ) {
         my $cobrand = $comment->get_cobrand_logged;
