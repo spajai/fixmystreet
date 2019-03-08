@@ -397,12 +397,22 @@ fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
     }
 }));
 
+var barrier_style = new OpenLayers.Style({
+    fill: false,
+    strokeColor: "#555555",
+    strokeOpacity: 1,
+    strokeWidth: 4
+});
+
 fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
     protocol: OpenLayers.Protocol.Alloy,
     http_options: {
       layerid: 230,
       layerVersion: '230.1-',
     },
+    stylemap: new OpenLayers.StyleMap({
+        'default': barrier_style
+    }),
     body: "Northamptonshire County Council",
     road: true,
     always_visible: false,
@@ -421,12 +431,22 @@ fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
     }
 }));
 
+var highways_style = new OpenLayers.Style({
+    fill: false,
+    strokeColor: "#111111",
+    strokeOpacity: 0.1,
+    strokeWidth: 7
+});
+
 fixmystreet.assets.add($.extend(true, {}, northants_defaults, {
     protocol: OpenLayers.Protocol.Alloy,
     http_options: {
       layerid: 20,
       layerVersion: '20.54-',
     },
+    stylemap: new OpenLayers.StyleMap({
+        'default': highways_style
+    }),
     body: "Northamptonshire County Council",
     road: true,
     always_visible: false,
